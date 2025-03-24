@@ -46,23 +46,29 @@ import streamlit as st
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-import streamlit as st
-from google.oauth2 import service_account
+
+# Google Sheets Setup
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 import json
-from google.oauth2.service_account import Credentials
-
 import streamlit as st
-import json
-from google.oauth2.service_account import Credentials
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Read secrets
-service_account_info = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT"])
-creds = Credentials.from_service_account_info(service_account_info, scopes=["https://www.googleapis.com/auth/spreadsheets"])
+# Google Sheets Setup
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
+# Load credentials from Streamlit Secrets
+credentials_dict = st.secrets["gspread_service_account"]
+credentials_json = json.dumps(credentials_dict)
+
+creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(credentials_json), scope)
 client = gspread.authorize(creds)
 
 # Open the Google Sheet
-sheet = client.open("Audi Car Recommender User Data").sheet1  # First sheet
+sheet = client.open("Audi Car Recommender User Data").sheet1
+
+client = gspread.authorize(creds)
+
 
 # Audi Car Data (Updated with Prices in Lakhs)
 audi_cars = {
@@ -101,6 +107,11 @@ if st.button("Get Recommendations"):
 
     else:
         st.error("❌ Please enter your name and email.")
+
+
+
+
+
 
 
 
