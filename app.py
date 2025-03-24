@@ -55,9 +55,11 @@ from google.oauth2.service_account import Credentials
 
 
 
+
 # Google Sheets Setup
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_service_account_info(st.secrets["gcp_service_account"])
+creds = Credentials.from_service_account_info(st.secrets["google_service_account"], scopes=scope)
+
 client = gspread.authorize(creds)
 
 # Open the Google Sheet
