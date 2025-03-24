@@ -43,12 +43,6 @@ import streamlit as st
 # Show the result
 #st.subheader("🔥 Recommended Audi Car for You:")
 #st.success(recommended_car)
-import streamlit as st
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-
-# Google Sheets Setup
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 import json
 import streamlit as st
 import gspread
@@ -65,12 +59,9 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(credentials_
 client = gspread.authorize(creds)
 
 # Open the Google Sheet
-sheet = client.open("Audi Car Recommender User Data").sheet1
+sheet = client.open("Audi Car Recommender User Data").sheet1  # First sheet
 
-client = gspread.authorize(creds)
-
-
-# Audi Car Data (Updated with Prices in Lakhs)
+# Audi Car Data (Prices in Lakhs)
 audi_cars = {
     "Q8": 107, "Q8 e-tron": 114, "e-tron GT": 172,
     "A4": 45.34, "A5": 60.00, "A6": 64.00,
@@ -107,7 +98,6 @@ if st.button("Get Recommendations"):
 
     else:
         st.error("❌ Please enter your name and email.")
-
 
 
 
