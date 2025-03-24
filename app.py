@@ -46,6 +46,25 @@ import streamlit as st
 import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import streamlit as st
+from google.oauth2 import service_account
+
+from google.oauth2 import service_account
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+# Streamlit secrets se Google Cloud credentials load karo
+creds_dict = st.secrets["google_service_account"]
+creds = service_account.Credentials.from_service_account_info(creds_dict)
+
+# Google Sheets Setup
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+client = gspread.authorize(creds)  # ✅ Directly use creds here
+
+# Open the Google Sheet
+sheet = client.open("Audi Car Recommender User Data").sheet1  # First sheet
+
+
 
 # Google Sheets Setup
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
